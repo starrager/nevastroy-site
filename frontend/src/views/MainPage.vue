@@ -50,7 +50,7 @@
                                 Каждый проект требует точности, ответственности
                                 и согласованной работы на всех этапах реализации.
                             </p>
-                            <a class="underlined-link" href="#contacts">Подробнее о компании <span>↗</span></a>
+                            <router-link to="/aboutus"><a class="underlined-link">Подробнее о компании <span>↗</span></a></router-link>
                         </div>
                     </div>
                     <div class="stats">

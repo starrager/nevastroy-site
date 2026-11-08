@@ -45,7 +45,7 @@
                         <span>ОСТАЛИСЬ ВОПРОСЫ?</span>
                         <h2>Свяжитесь с нами<span>.</span></h2>
                     </div>
-                    <a href="/#contacts" class="inner-button">Контакты <span>↗</span></a>
+                    <router-link to="/contacts">КОНТАКТЫ</router-link>
                 </div>
             </section>
         </main>

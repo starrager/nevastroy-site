@@ -3,7 +3,7 @@
         <div class="container">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <a class="brand" href="#">
+                    <a class="brand">
                         <span class="brand-mark">
                             <span></span>
                             <span></span>
@@ -18,9 +18,9 @@
                 </div>
                 <div class="footer-column">
                     <span class="footer-heading">НАВИГАЦИЯ</span>
-                    <a href="#about">О компании</a>
-                    <a href="#services">Услуги</a>
-                    <a href="#projects">Объекты</a>
+                    <router-link to="/aboutus">О КОМПАНИИ</router-link>
+                    <router-link to="/ourservices">УСЛУГИ</router-link>
+                    <router-link to="/ourobjects">ОБЪЕКТЫ</router-link>
                 </div>
                 <div class="footer-column">
                     <span class="footer-heading">КОНТАКТЫ</span>
