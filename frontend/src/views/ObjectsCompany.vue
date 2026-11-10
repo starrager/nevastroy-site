@@ -1,77 +1,184 @@
 <template>
-	<div class="inner-page">
-		<Header/>
-		<main>
-			<section class="inner-hero">
-				<div class="container">
-					<span class="page-kicker">02 / ПОРТФОЛИО</span>
-					<h1>Наши объекты<span>.</span></h1>
-					<p>Реализованные строительные проекты и комплексные инженерные решения.</p>
-					<div class="page-breadcrumb">Главная / Объекты</div>
-				</div>
-			</section>
-			<section class="inner-section">
-				<div class="container">
-					<div class="page-heading">
-						<span>ПОРТФОЛИО</span>
-						<span>{{ projects.length }} ПРОЕКТОВ В СПИСКЕ</span>
-					</div>
-					<div class="project-filters">
-						<button v-for="year in years" :key="year" :class="{active:activeYear===year}" @click="activeYear=year">{{ year }}</button>
-					</div>
-					<div class="object-list">
-						<article v-for="(project,index) in filteredProjects" :key="project.title" class="object-card">
-							<div class="object-number">{{ String(index+1).padStart(2,'0') }}</div>
-							<div class="object-content">
-								<span class="object-year">{{ project.year }}</span>
-								<h2>{{ project.title }}</h2>
-								<p>{{ project.description }}</p>
-							</div>
-							<div class="object-type">{{ project.type }}</div>
-						</article>
-					</div>
-					<p class="objects-note">Перечень проектов представлен по информации, опубликованной компанией.</p>
-				</div>
-			</section>
-			<section class="inner-cta">
-				<div class="container inner-cta-row">
-					<div>
-						<span>ВАШ ОБЪЕКТ - СЛЕДУЮЩИЙ</span>
-						<h2>Обсудим задачу<span>.</span></h2>
-					</div>
-					<a href="/#contacts" class="inner-button">Обсудить проект <span>↗</span></a>
-				</div>
-			</section>
-		</main>
-		<Footer/>
-	</div>
+    <div class="inner-page">
+        <Header/>
+        <main>
+            <section class="inner-hero">
+                <div class="container">
+                    <span class="page-kicker">02 / ПОРТФОЛИО</span>
+                    <h1>Наши объекты<span>.</span></h1>
+                    <p>Реализованные строительные проекты и комплексные инженерные решения.</p>
+                    <div class="page-breadcrumb">Главная / Объекты</div>
+                </div>
+            </section>
+            <section class="inner-section">
+                <div class="container">
+                    <div v-for="(group,groupIndex) in groupedProjects":key="group.year" class="year-block" data-aos="fade-up">
+                        <div class="year-header">
+                            <h2>{{ group.year }}</h2>
+                        </div>
+                        <div class="year-content">
+                            <div class="year-text">
+                                <ul>
+                                    <li v-for="(project,index) in group.projects":key="index">
+                                        {{ project.description }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="year-images">
+                                <div v-for="n in 5":key="n" class="image-placeholder" data-aos="fade-up" :data-aos-delay="(n%3)*100">
+                                    <img :src="getImageUrl(`photo${n}`)" alt="Загрузка изображения">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="inner-cta">
+                <div class="container inner-cta-row">
+                    <div>
+                        <span>ВАШ ОБЪЕКТ - СЛЕДУЮЩИЙ</span>
+                        <h2>Обсудим задачу<span>.</span></h2>
+                    </div>
+                    <a href="/#contacts" class="inner-button">Обсудить проект <span>↗</span></a>
+                </div>
+            </section>
+        </main>
+        <Footer/>
+    </div>
 </template>
 
 <script setup lang="ts">
-import {computed,ref} from 'vue'
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
+import{onMounted}from'vue'
+import AOS from'aos'
+import'aos/dist/aos.css'
+import Header from'../components/Header.vue'
+import Footer from'../components/Footer.vue'
 
-const years=['Все','2024-2025','2020-...','2019-2020','2018-2019','2017-2018','2016','2015','2014','2013']
-const activeYear=ref('Все')
+const getImageUrl=(name:any)=>{
+  return new URL(`../images/objects/div1/${name}.png`,import.meta.url).href
+}
 
-const projects=[
-    {year:'2024-2025',title:'BELEXPO - Минский международный выставочный центр',description:'Благоустройство, парковки, подъездные пути, озеленение, малые архитектурные формы, асфальтобетонные покрытия, бордюры, ливневая канализация, освещение, каскадные лестницы и террасы.',type:'Благоустройство'},
-    {year:'2020-...',title:'Экспериментальный многофункциональный комплекс «Минск-Мир»',description:'Проект застройки. Седьмая очередь строительства. Генеральный план, благоустройство и инженерные сети.',type:'Комплекс работ'},
-    {year:'2019-2020',title:'Жилой комплекс в агрогородке Ратомка',description:'Строительство жилого комплекса с объектами инфраструктуры. Сети НВК, теплотрасса, наружное электроснабжение, благоустройство, малые архитектурные формы и озеленение.',type:'Жилое строительство'},
-    {year:'2018-2019',title:'Здание на улице Франциска Скорины, 21',description:'Реконструкция здания с пристройкой административного корпуса, многоуровневой автостоянкой и спортивно-оздоровительным центром. Внутренняя отделка.',type:'Реконструкция'},
-    {year:'2017-2018',title:'Торгово-административное здание по улице Кульман',description:'Строительство здания. Устройство вентилируемого фасада и благоустройство.',type:'Строительство'},
-    {year:'2017-2018',title:'Объект торговли на проспекте Рокоссовского',description:'Подготовительный период и генеральный подряд. Комплекс строительных работ.',type:'Генподряд'},
-    {year:'2016',title:'Административно-складское здание в Бобруйске',description:'Строительство здания с пунктом технического обслуживания и здания шиномонтажа по улице Орджоникидзе.',type:'Строительство'},
-    {year:'2015',title:'Многофункциональный комплекс с гостиницей «КЕМПИНСКИ»',description:'Объект в квартале проспекта Независимости, улицы Купалы и реки Свислочь в Минске.',type:'Комплекс работ'},
-    {year:'2014',title:'Гостиница «Беларусь»',description:'Реконструкция фасадов здания гостиницы по улице Сторожевской, 15.',type:'Реконструкция'},
-    {year:'2013',title:'Многофункциональный развлекательный центр «Замок»',description:'Комплекс общественного питания с административно-социальной инфраструктурой по проспекту Победителей, 65 в Минске.',type:'Строительство'}
+const groupedProjects=[
+    {
+        year:'2024-2025',
+        imageCount:5,
+        projects:[
+            {description:'BELEXPO - Минский Международный Выставочный Центр. Благоустройство, парковки, подъездные пути, озеленение, МАФ.'},
+            {description:'Асфальтобетонные покрытия, бордюры, ливневая канализация, освещение, каскадные лестницы и террасы.'},
+            {description:'Строительно-монтажные работы 2024-2025 гг.'}
+        ]
+    },
+    {
+        year:'2020-...',
+        imageCount:9,
+        projects:[
+            {description:'Экспериментальный многофункциональный комплекс "Минск-Мир". Проект застройки. 7-я очередь строительства. Генплан, благоустройство, инженерные сети.'}
+        ]
+    },
+    {
+        year:'2019-2020',
+        imageCount:8,
+        projects:[
+            {description:'Строительство жилого комплекса с объектами инфраструктуры по адресу: Минский р-н., Ждановичский с/с, аг. Ратомка. 22-я очередь строительства. Жилой дом № 1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3, и 4 по ГП. (Сети НВК, Теплотрасса, Наружное электроснабжение, Благоустройство, МАФы и Озеленение)'}
+        ]
+    },
+    {
+        year:'2018-2019',
+        imageCount:3,
+        projects:[
+            {description:'Реконструкция здания неустановленного назначения по улице Франциска Скорины, 21, с пристройкой административного корпуса с многоуровневой автостоянкой и спортивно-оздоровительного центра. (внутренняя отделка)'}
+        ]
+    },
+    {
+        year:'2017-2018',
+        imageCount:7,
+        projects:[
+            {description:'Строительство торгово-административного здания по ул. Кульман (УСТРОЙСТВО ВЕНТИЛИРУЕМОГО ФАСАДА, БЛАГОУСТРОЙСТВО)'}
+        ]
+    },
+    {
+        year:'2017',
+        imageCount:5,
+        projects:[
+            {description:'«Строительство объекта торговли по проспекту Рокоссовского. Подготовительный период. Генподрядчик, весь комплекс работ. Заказчик: ООО "Фармстрой"»'}
+        ]
+    },
+    {
+        year:'2016',
+        imageCount:4,
+        projects:[
+            {description:'«Строительство административно-складского здания с пунктом технического обслуживания и здания шиномонтажа по ул. Орджоникидзе в г. Бобруйске». Ген. подряд, весь комплекс работ.'},
+            {description:'«Объект торговли строительными материалами по ул. Гоголя, 170а в г. Бобруйске». Ген. подряд, сеть «Практик».'},
+            {description:'«Реконструкция капитального строения под магазин розничной торговли в г. Городок». Ген. подряд.'},
+            {description:'«Реконструкция магазина под объект общественного питания (кафе Golden Coffe) по ул. Кирова, 2». Ген. подряд.'},
+            {description:'«Реконструкция здания столовой под магазин в г. Чаусы». Ген. подряд.'},
+            {description:'«Ветропарк на пять ветрогенераторов общей мощностью 5МВт».'},
+            {description:'«Капитальный ремонт, благоустройство территорий, прилегающих к зданиям АТС в г. Минске». Ген. подряд.'},
+            {description:'«Капитальный ремонт с благоустройством территорий прилегающих к зданиям АТС в г. Минске».'},
+            {description:'«Строительство жилого дома в д. Дуброво Минского района»'}
+        ]
+    },
+    {
+        year:'2015',
+        imageCount:3,
+        projects:[
+            {description:'«Многофункциональный комплекс с гостиницей «КЕМПИНСКИ», г. Минск».'},
+            {description:'«Строительство административного здания по ул. Пинская, 28а в г. Минске».'},
+            {description:'«Объект торговли строительными материалами по ул. Гоголя, 170а в г. Бобруйске».'},
+            {description:'«Реконструкция магазина "Евроопт" по адресу г. Орша».'},
+            {description:'«Реконструкция здания д/с №18 для проживания слушателей».'},
+            {description:'«Физкультурно-оздоровительный комплекс в квартале ул. Ангарская-Артема-Герасименко-Нестерова».'},
+            {description:'«Модернизация здания общежития №2 по ул. Беды, 4, корп.1».'},
+            {description:'«Модернизация восточного и северного фасадов МСК-2».'},
+            {description:'«Строительство многофункционального здания в Минской области, район аг. Михановичи».'}
+        ]
+    },
+    {
+        year:'2014',
+        imageCount:6,
+        projects:[
+            {description:'«Модернизация магазина ООО "Евроторг" по адресу: г. Орша, ул. Семенова, 27А».'},
+            {description:'«Гостиница «Беларусь» по ул. Сторожевской, 15 с выделением 1 этапа-реконструкция фасадов».'},
+            {description:'Тепловая модернизация фасада здания шиномонтажного отделения.'},
+            {description:'Строительство молочно-товарной фермы 45х126х4,2.'},
+            {description:'«Строительство многофункционального комплекса в г. Минске по проспекту Победителей».'},
+            {description:'Строительство овощехранилища 18х60х8 Брестская область.'},
+            {description:'Модернизация здания общежития №2 по ул. Беды, 4.'},
+            {description:'«Модернизация здания торгового дома «Кросны» с благоустройством прилегающей территории».'},
+            {description:'«Текущий ремонт склада, расположенного по адресу: г. Витебск, ул. Ленинградская, д. 155А».'},
+            {description:'«Помещения участка технического обслуживания ЦСО Филиала «ВТС» ОАО «МЗКТ».'},
+            {description:'Текущий ремонт «Кабинет №619, учебный класс, холл, коридоры».'},
+            {description:'«Текущий ремонт подъездной автомобильной дороги и проездов из бетонного покрытия».'},
+            {description:'Строительство общественно-торгового центра г. Высокое.'},
+            {description:'«Производственно-складские помещения и транспортно-логистический центр на территории Минского района».'},
+            {description:'«Строительство административного объекта по ул. Пинской, 28а».'}
+        ]
+    },
+    {
+        year:'2013',
+        imageCount:2,
+        projects:[
+            {description:'«Молочно-товарная ферма на 600 голов дойного стада» д. Лешница, Березинского района.'},
+            {description:'«Строительство многофункционального здания в Минской области, район аг. Михановичи».'},
+            {description:'«Комплекс общественного питания с административно-социальной инфраструктурой (типа Lido) по пр. Победителей, 65 в г. Минске. Многофункциональный торгово-развлекательный центр «Замок».'},
+            {description:'Строительство многофункционального здания в Минской области, Минский р-н, а.г. Новоселье.'},
+            {description:'«Капитальный ремонт жилого дома №10 по бульвару Дзержинского в г. Узда».'},
+            {description:'«Здание Октябрьского районного военного комиссариата г. Минск по ул. Казинца».'},
+            {description:'«Административное здание на территории в границах ул. Орловская - пр. Победителей - р. Свислочь в г. Минске».'}
+        ]
+    }
 ]
 
-const filteredProjects=computed(()=>activeYear.value==='Все'?projects:projects.filter(project=>project.year===activeYear.value))
+onMounted(()=>{
+    AOS.init({
+        duration:800,
+        once:true,
+        offset:100
+    })
+})
 </script>
 
-<style>
+<style scoped>
 .inner-page{
 	background:#f7f7f4;
 	color:#252724;
@@ -115,98 +222,88 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 .inner-section{
 	padding:65px 0 80px;
 }
-.page-heading{
-	display:flex;
-	align-items:center;
-	justify-content:space-between;
-	gap:20px;
-	padding-bottom:20px;
+.year-block{
+	margin-bottom:80px;
+}
+.year-block:last-child{
+	margin-bottom:0;
+}
+.year-header{
+	margin-bottom:30px;
 	border-bottom:1px solid #dedfd9;
-	color:#74776e;
-	font-size:12px;
-	font-weight:700;
-	letter-spacing:.12em;
+	padding-bottom:15px;
 }
-.about-layout{
-	display:grid;
-	grid-template-columns:1.1fr .9fr;
-	gap:70px;
-	padding:45px 0 55px;
-}
-.about-layout h2{
+.year-header h2{
 	margin:0;
-	font-size:clamp(38px,4.5vw,58px);
-	font-weight:500;
-	line-height:1.15;
-	letter-spacing:-.055em;
-}
-.about-layout h2 span{
-	color:#999c92;
-}
-.about-copy p{
-	margin:0 0 18px;
-	color:#686b64;
-	font-size:16px;
-	line-height:1.9;
-}
-.about-stats{
-	display:grid;
-	grid-template-columns:repeat(3,1fr);
-	border-top:1px solid #dedfd9;
-	border-bottom:1px solid #dedfd9;
-}
-.about-stat{
-	display:flex;
-	flex-direction:column;
-	gap:12px;
-	padding:25px;
-	border-right:1px solid #dedfd9;
-}
-.about-stat:first-child{
-	padding-left:0;
-}
-.about-stat:last-child{
-	border-right:0;
-}
-.about-stat strong{
-	font-size:42px;
-	font-weight:500;
-	letter-spacing:-.06em;
-}
-.about-stat span{
-	font-size:14px;
-	line-height:1.7;
-	color:#777a73;
-}
-.inner-section-muted{
-	background:#efefeb;
-}
-.principle-grid{
-	display:grid;
-	grid-template-columns:repeat(3,1fr);
-	gap:20px;
-	padding-top:35px;
-}
-.principle-card{
-	padding:30px 25px;
-	background:#f7f7f4;
-	border:1px solid #dedfd9;
-}
-.principle-card>span{
-	color:#d92f2f;
-	font-size:13px;
-}
-.principle-card h3{
-	margin:32px 0 14px;
-	font-size:25px;
+	font-size:36px;
 	font-weight:500;
 	letter-spacing:-.04em;
+	color:#252724;
 }
-.principle-card p{
+.year-content{
+	display:grid;
+	grid-template-columns:340px 1fr;
+	gap:50px;
+	align-items:start;
+}
+.year-text ul{
+	list-style:none;
+	padding:0;
 	margin:0;
-	color:#777a73;
+}
+.year-text li{
+	position:relative;
+	padding-left:20px;
+	margin-bottom:15px;
 	font-size:15px;
-	line-height:1.8;
+	line-height:1.7;
+	color:#525550;
+}
+.year-text li::before{
+	content:"•";
+	position:absolute;
+	left:0;
+	top:0;
+	color:#d92f2f;
+	font-size:18px;
+	line-height:1.4;
+}
+.year-images{
+	display:grid;
+	grid-template-columns:repeat(3, 1fr);
+	gap:15px;
+}
+.image-placeholder{
+	background:#e9eae4;
+	aspect-ratio: 4 / 3;
+	position:relative;
+	overflow:hidden;
+	border:1px solid #dedfd9;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	transition:transform 0.3s;
+}
+.image-placeholder:hover{
+	transform:scale(1.02);
+	z-index:2;
+}
+.placeholder-inner{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	gap:10px;
+	color:#a1a5a0;
+}
+.placeholder-inner .icon{
+	font-size:30px;
+	line-height:1;
+	font-weight:300;
+}
+.placeholder-inner .text{
+	font-size:11px;
+	text-transform:uppercase;
+	letter-spacing:2px;
 }
 .inner-cta{
 	padding:65px 0;
@@ -240,6 +337,8 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 	color:#fff;
 	font-size:15px;
 	font-weight:700;
+	text-decoration:none;
+	transition:background .2s;
 }
 .inner-button span{
 	color:#ed3434;
@@ -248,190 +347,13 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 .inner-button:hover{
 	background:#444740;
 }
-.project-filters{
-	display:flex;
-	flex-wrap:wrap;
-	gap:9px;
-	margin:28px 0 35px;
-}
-.project-filters button{
-	padding:10px 16px;
-	border:1px solid #d8d9d2;
-	background:transparent;
-	color:#686b64;
-	font:inherit;
-	font-size:13px;
-	cursor:pointer;
-	transition:background .2s,color .2s,border-color .2s;
-}
-.project-filters button.active,
-.project-filters button:hover{
-	background:#292c28;
-	border-color:#292c28;
-	color:#fff;
-}
-.object-list{
-	border-top:1px solid #dedfd9;
-}
-.object-card{
-	display:grid;
-	grid-template-columns:65px minmax(0,1fr) 170px;
-	gap:25px;
-	align-items:start;
-	padding:29px 8px;
-	border-bottom:1px solid #dedfd9;
-	transition:background .3s;
-}
-.object-card:hover{
-	background:#efefeb;
-}
-.object-number{
-	font-size:14px;
-	color:#d92f2f;
-	padding-top:5px;
-}
-.object-year{
-	font-size:12px;
-	color:#777a73;
-	letter-spacing:.1em;
-	font-weight:700;
-}
-.object-content h2{
-	margin:10px 0;
-	font-size:24px;
-	font-weight:500;
-	letter-spacing:-.035em;
-	line-height:1.4;
-}
-.object-content p{
-	max-width:760px;
-	margin:0;
-	color:#777a73;
-	font-size:15px;
-	line-height:1.8;
-}
-.object-type{
-	justify-self:end;
-	margin-top:4px;
-	padding:7px 11px;
-	border:1px solid #dedfd9;
-	color:#777a73;
-	font-size:11px;
-	text-align:center;
-}
-.objects-note{
-	margin-top:28px;
-	color:#85887f;
-	font-size:13px;
-	line-height:1.7;
-}
-.certificate-grid{
-	display:grid;
-	grid-template-columns:repeat(3,minmax(0,1fr));
-	gap:24px;
-	margin-top:35px;
-}
-.certificate-card{
-	min-width:0;
-}
-.certificate-preview{
-	height:320px;
-	position:relative;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	background:#e9eae4;
-	border:1px solid #dedfd9;
-	overflow:hidden;
-}
-.certificate-index{
-	position:absolute;
-	top:15px;
-	left:16px;
-	font-size:12px;
-	color:#777a73;
-}
-.certificate-sheet{
-	width:65%;
-	height:76%;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	justify-content:center;
-	gap:13px;
-	padding:18px;
-	background:#fff;
-	border:1px solid #d6d7d0;
-	box-shadow:0 12px 30px rgba(0,0,0,.07);
-	transform:rotate(-2deg);
-}
-.certificate-emblem{
-	width:35px;
-	height:35px;
-	display:grid;
-	place-items:center;
-	border:1px solid #d92f2f;
-	color:#d92f2f;
-	font-size:20px;
-	font-weight:800;
-}
-.certificate-line{
-	width:65%;
-	height:2px;
-	background:#dedfd9;
-}
-.certificate-sheet strong{
-	font-size:12px;
-	letter-spacing:.12em;
-}
-.certificate-subline{
-	width:75%;
-	height:3px;
-	background:#e5e6e0;
-}
-.certificate-subline.short{
-	width:48%;
-}
-.certificate-stamp{
-	margin-top:10px;
-	padding:5px 9px;
-	border:1px solid #d92f2f;
-	color:#d92f2f;
-	font-size:9px;
-	letter-spacing:.1em;
-}
-.certificate-label{
-	position:absolute;
-	right:14px;
-	bottom:14px;
-	color:#777a73;
-	font-size:10px;
-	letter-spacing:.1em;
-}
-.certificate-info{
-	padding:17px 2px;
-}
-.certificate-info>span{
-	font-size:11px;
-	color:#777a73;
-	letter-spacing:.1em;
-}
-.certificate-info h2{
-	margin:9px 0 0;
-	font-size:20px;
-	font-weight:500;
-	line-height:1.45;
-	letter-spacing:-.025em;
-}
 @media(max-width:1000px){
-	.about-layout{
-		gap:35px;
+	.year-content{
+		grid-template-columns:1fr;
+		gap:30px;
 	}
-	.certificate-grid{
-		grid-template-columns:repeat(2,minmax(0,1fr));
-	}
-	.object-card{
-		grid-template-columns:45px minmax(0,1fr) 130px;
+	.year-images{
+		grid-template-columns:repeat(2, 1fr);
 	}
 }
 @media(max-width:760px){
@@ -447,30 +369,8 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 	.inner-section{
 		padding:48px 0 55px;
 	}
-	.about-layout{
+	.year-images{
 		grid-template-columns:1fr;
-		gap:25px;
-		padding:32px 0 38px;
-	}
-	.about-stats{
-		grid-template-columns:1fr;
-	}
-	.about-stat{
-		padding:20px 0;
-		border-right:0;
-		border-bottom:1px solid #dedfd9;
-	}
-	.about-stat:last-child{
-		border-bottom:0;
-	}
-	.principle-grid{
-		grid-template-columns:1fr;
-	}
-	.principle-card{
-		padding:25px;
-	}
-	.principle-card h3{
-		margin-top:20px;
 	}
 	.inner-cta{
 		padding:45px 0;
@@ -478,35 +378,6 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 	.inner-cta-row{
 		align-items:flex-start;
 		flex-direction:column;
-	}
-	.object-card{
-		grid-template-columns:30px minmax(0,1fr);
-		gap:13px;
-		padding:23px 4px;
-	}
-	.object-type{
-		grid-column:2;
-		justify-self:start;
-	}
-	.object-content h2{
-		font-size:21px;
-	}
-	.object-content p{
-		font-size:14px;
-	}
-	.certificate-grid{
-		grid-template-columns:1fr 1fr;
-		gap:15px;
-	}
-	.certificate-preview{
-		height:245px;
-	}
-	.certificate-sheet{
-		width:75%;
-		height:75%;
-	}
-	.certificate-info h2{
-		font-size:17px;
 	}
 }
 @media(max-width:420px){
@@ -516,21 +387,8 @@ const filteredProjects=computed(()=>activeYear.value==='Все'?projects:project
 	.inner-hero p{
 		font-size:15px;
 	}
-	.page-heading{
-		font-size:10px;
-	}
-	.certificate-grid{
-		grid-template-columns:1fr;
-	}
-	.certificate-preview{
-		height:300px;
-	}
-	.project-filters{
-		gap:7px;
-	}
-	.project-filters button{
-		padding:9px 11px;
-		font-size:12px;
+	.year-header h2{
+		font-size:28px;
 	}
 }
 </style>

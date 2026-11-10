@@ -16,14 +16,15 @@
                         <span>НАША ИСТОРИЯ</span>
                         <span>С 2004 ГОДА</span>
                     </div>
-                    <div class="about-layout">
-                        <div>
-                            <h2>Создаём объекты.<br /><span>Формируем будущее.</span></h2>
-                        </div>
+                    <div class="about-centered">
+                        <h2 class="about-title">
+                            Создаём объекты.<br />
+                            <span>Формируем будущее.</span>
+                        </h2>
                         <div class="about-copy">
-                            <p>Группа строительных компаний «НЕВА-СТРОЙ» основана в феврале 2004 года. Компания работает на рынке строительных услуг и постоянно совершенствует технологии, развивает инженерно-технический состав и повышает квалификацию сотрудников.</p>
-                            <p>Мы обладаем опытом строительства зданий и сооружений различной сложности. Материально-техническая база позволяет выполнять работы собственными силами - от подготовительного периода и прокладки инженерных сетей до возведения каркаса, благоустройства и озеленения.</p>
-                            <p>Гибкий подход и точное планирование помогают организовать строительно-монтажные работы в установленные сроки.</p>
+                            <p>Группа строительных компаний "НЕВА-СТРОЙ" основана в феврале 2004 года и уже более 10 лет безупречно работает на рынке строительных услуг для Вас. Постоянное и динамичное развитие группы компаний позволяет нам усовершенствоваться, применять новые технологии, повышать квалификацию инженерно-технического состава, обучать персонал новым разработкам в сфере строительства.</p>
+                            <p>Наша организация обладает большим опытом строительства зданий и сооружений любой сложности. Материально-техническая база позволяет нам выполнять все работы собственными силами, начиная с подготовительного периода, прокладки инженерных сетей, возведением каркаса здания и заканчивая благоустройством и озеленением!</p>
+                            <p>Штат нашей компании насчитывает порядка 150 человек различных специальностей включая ИТР, что позволяет нам выполнять любые задачи при строительстве объектов! Гибкий подход и точное планирование позволяют нам в срок и с высочайшим качеством выполнять строительно-монтажные работы на наших объектах!</p>
                         </div>
                     </div>
                     <div class="about-stats">
@@ -86,7 +87,7 @@ import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 </script>
 
-<style>
+<style scoped>
 .inner-page{
 	background:#f7f7f4;
 	color:#252724;
@@ -142,28 +143,36 @@ import Footer from '../components/Footer.vue'
 	font-weight:700;
 	letter-spacing:.12em;
 }
-.about-layout{
-	display:grid;
-	grid-template-columns:1.1fr .9fr;
-	gap:70px;
-	padding:45px 0 55px;
+
+/* НОВЫЕ СТИЛИ ДЛЯ ЦЕНТРИРОВАННОГО БЛОКА */
+.about-centered{
+	max-width:850px;
+	margin:0 auto;
+	padding:55px 0;
+	text-align:center;
 }
-.about-layout h2{
-	margin:0;
+.about-title{
+	margin:0 0 40px;
 	font-size:clamp(38px,4.5vw,58px);
 	font-weight:500;
 	line-height:1.15;
 	letter-spacing:-.055em;
 }
-.about-layout h2 span{
+.about-title span{
 	color:#999c92;
 }
 .about-copy p{
-	margin:0 0 18px;
+	margin:0 0 20px;
 	color:#686b64;
 	font-size:16px;
 	line-height:1.9;
+	text-align:left;
 }
+.about-copy p:last-child{
+	margin-bottom:0;
+}
+/* ----------------------------------- */
+
 .about-stats{
 	display:grid;
 	grid-template-columns:repeat(3,1fr);
@@ -439,9 +448,6 @@ import Footer from '../components/Footer.vue'
 	letter-spacing:-.025em;
 }
 @media(max-width:1000px){
-	.about-layout{
-		gap:35px;
-	}
 	.certificate-grid{
 		grid-template-columns:repeat(2,minmax(0,1fr));
 	}
@@ -461,11 +467,6 @@ import Footer from '../components/Footer.vue'
 	}
 	.inner-section{
 		padding:48px 0 55px;
-	}
-	.about-layout{
-		grid-template-columns:1fr;
-		gap:25px;
-		padding:32px 0 38px;
 	}
 	.about-stats{
 		grid-template-columns:1fr;
