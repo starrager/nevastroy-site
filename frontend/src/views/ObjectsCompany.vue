@@ -25,8 +25,8 @@
                                 </ul>
                             </div>
                             <div class="year-images">
-                                <div v-for="n in 5":key="n" class="image-placeholder" data-aos="fade-up" :data-aos-delay="(n%3)*100">
-                                    <img :src="getImageUrl(`photo${n}`)" alt="Загрузка изображения">
+                                <div v-for="n in group.imageCount":key="n" class="image-placeholder" data-aos="fade-up" :data-aos-delay="(n%3)*100">
+                                    <img :src="getImageUrl(group.folder,`photo${n}`)" alt="Загрузка изображения">
                                 </div>
                             </div>
                         </div>
@@ -54,13 +54,14 @@ import'aos/dist/aos.css'
 import Header from'../components/Header.vue'
 import Footer from'../components/Footer.vue'
 
-const getImageUrl=(name:any)=>{
-  return new URL(`../images/objects/div1/${name}.png`,import.meta.url).href
+const getImageUrl=(folder:string,name:any)=>{                         
+    return new URL(`../images/objects/${folder}/${name}.png`,import.meta.url).href
 }
 
 const groupedProjects=[
     {
         year:'2024-2025',
+        folder:'div1',
         imageCount:5,
         projects:[
             {description:'BELEXPO - Минский Международный Выставочный Центр. Благоустройство, парковки, подъездные пути, озеленение, МАФ.'},
@@ -70,6 +71,7 @@ const groupedProjects=[
     },
     {
         year:'2020-...',
+        folder:'div2',
         imageCount:9,
         projects:[
             {description:'Экспериментальный многофункциональный комплекс "Минск-Мир". Проект застройки. 7-я очередь строительства. Генплан, благоустройство, инженерные сети.'}
@@ -77,6 +79,7 @@ const groupedProjects=[
     },
     {
         year:'2019-2020',
+        folder:'div3',
         imageCount:8,
         projects:[
             {description:'Строительство жилого комплекса с объектами инфраструктуры по адресу: Минский р-н., Ждановичский с/с, аг. Ратомка. 22-я очередь строительства. Жилой дом № 1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3, и 4 по ГП. (Сети НВК, Теплотрасса, Наружное электроснабжение, Благоустройство, МАФы и Озеленение)'}
@@ -84,6 +87,7 @@ const groupedProjects=[
     },
     {
         year:'2018-2019',
+        folder:'div4',
         imageCount:3,
         projects:[
             {description:'Реконструкция здания неустановленного назначения по улице Франциска Скорины, 21, с пристройкой административного корпуса с многоуровневой автостоянкой и спортивно-оздоровительного центра. (внутренняя отделка)'}
@@ -91,6 +95,7 @@ const groupedProjects=[
     },
     {
         year:'2017-2018',
+        folder:'div5',
         imageCount:7,
         projects:[
             {description:'Строительство торгово-административного здания по ул. Кульман (УСТРОЙСТВО ВЕНТИЛИРУЕМОГО ФАСАДА, БЛАГОУСТРОЙСТВО)'}
@@ -98,6 +103,7 @@ const groupedProjects=[
     },
     {
         year:'2017',
+        folder:'div6',
         imageCount:5,
         projects:[
             {description:'«Строительство объекта торговли по проспекту Рокоссовского. Подготовительный период. Генподрядчик, весь комплекс работ. Заказчик: ООО "Фармстрой"»'}
@@ -106,6 +112,7 @@ const groupedProjects=[
     {
         year:'2016',
         imageCount:4,
+        folder:'div7',
         projects:[
             {description:'«Строительство административно-складского здания с пунктом технического обслуживания и здания шиномонтажа по ул. Орджоникидзе в г. Бобруйске». Ген. подряд, весь комплекс работ.'},
             {description:'«Объект торговли строительными материалами по ул. Гоголя, 170а в г. Бобруйске». Ген. подряд, сеть «Практик».'},
@@ -120,6 +127,7 @@ const groupedProjects=[
     },
     {
         year:'2015',
+        folder:'div8',
         imageCount:3,
         projects:[
             {description:'«Многофункциональный комплекс с гостиницей «КЕМПИНСКИ», г. Минск».'},
@@ -135,6 +143,7 @@ const groupedProjects=[
     },
     {
         year:'2014',
+        folder:'div9',
         imageCount:6,
         projects:[
             {description:'«Модернизация магазина ООО "Евроторг" по адресу: г. Орша, ул. Семенова, 27А».'},
@@ -156,6 +165,7 @@ const groupedProjects=[
     },
     {
         year:'2013',
+        folder:'div10',
         imageCount:2,
         projects:[
             {description:'«Молочно-товарная ферма на 600 голов дойного стада» д. Лешница, Березинского района.'},
