@@ -68,15 +68,6 @@
                     </div>
                 </div>
             </section>
-            <section class="inner-cta">
-                <div class="container inner-cta-row">
-                    <div>
-                        <span>ЕСТЬ ПРОЕКТ?</span>
-                        <h2>Давайте обсудим<span>.</span></h2>
-                    </div>
-                    <a href="/#contacts" class="inner-button">Связаться с нами <span>↗</span></a>
-                </div>
-            </section>
         </main>
         <Footer></Footer>
     </div>

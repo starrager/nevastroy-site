@@ -13,28 +13,18 @@
             <section class="inner-section">
                 <div class="container">
                     <div class="page-heading">
-                        <span>ЧТО МЫ ДЕЛАЕМ</span>
-                        <span>{{ services.length }} НАПРАВЛЕНИЙ</span>
+                        <div><span class="pageofheading"><h2>Виды работ</h2></span><br><span><h2 class="fixx">Выполняемые группой компаний "Нева-Строй"</h2></span></div>
                     </div>
                     <div class="service-list">
-                        <article v-for="(service,index) in services" :key="service.title" class="service-card">
-                            <span class="service-number">0{{ index+1 }}</span>
+                        <article v-for="(service,id) in services" :key="id" class="service-card">
+                            <img class="img" :src="getImageUrl(id+1)" alt="Загрузка изображения">
                             <div class="service-content">
-                                <h2>{{ service.title }}</h2>
-                                <p>{{ service.description }}</p>
+                                <h3 class="title">{{ service.title }}</h3>
+                                <p class=description>{{ service.description }}</p>
                             </div>
                             <span class="service-arrow">↗</span>
                         </article>
                     </div>
-                </div>
-            </section>
-            <section class="inner-cta">
-                <div class="container inner-cta-row">
-                    <div>
-                        <span>ЕСТЬ ЗАДАЧА ДЛЯ НАШЕЙ КОМАНДЫ?</span>
-                        <h2>Обсудим ваш проект<span>.</span></h2>
-                    </div>
-                    <router-link to="/contacts"><a class="inner-button">Связаться <span>↗</span></a></router-link>
                 </div>
             </section>
         </main>
@@ -46,20 +36,34 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
+const getImageUrl=(number:number)=>{                         
+    return new URL(`../images/services/photo${number}.jpg`,import.meta.url).href
+}
+
 const services=[
-    {title:'Генеральный подряд и строительство под ключ',description:'Организация и управление строительством на всех этапах. Координация специалистов, контроль сроков и качества выполнения работ.'},
-    {title:'Монтаж металлических конструкций',description:'Монтаж металлокаркасов зданий и сооружений, установка несущих конструкций и элементов строительных систем.'},
-    {title:'Электромонтажные и сантехнические работы',description:'Монтаж внутренних инженерных систем, прокладка коммуникаций и подключение необходимого оборудования.'},
-    {title:'Горизонтально-направленное бурение',description:'Бестраншейная прокладка подземных коммуникаций с применением специализированных буровых установок.'},
-    {title:'Земляные работы',description:'Разработка и подготовка участков, устройство котлованов, траншей и оснований под строительство.'},
-    {title:'Демонтажные работы',description:'Безопасный демонтаж строительных конструкций и подготовка площадок к дальнейшим работам.'},
-    {title:'Благоустройство и озеленение',description:'Комплексное благоустройство территорий, устройство площадок, дорожек и озеленение.'},
-    {title:'Асфальтобетонные покрытия',description:'Подготовка оснований и устройство асфальтобетонных покрытий для дорог, проездов и площадок.'},
-    {title:'Тепловые сети и наружные коммуникации',description:'Строительство и монтаж тепловых сетей, водопровода, канализации и ливневых систем.'}
+    {title:'Генподряд, строительство под ключ',description:'Генеральный подряд (генподряд) - это организация, планирование и управление строительными работами в соответствии с утвержденной проектной документацией.'},
+    {title:'Монтаж металлических каркасов зданий',description:'Применение металлоконструкций ускоряет и упрощает работы по монтажу, проектированию и строительству с минимальными затратами.'},
+    {title:'Специальные работы (электромонтажные, сантехнические)',description:'Мы обладаем необходимым оборудованием и квалификацией для прокладки инженерных сетей'},
+    {title:'Горизонтально-направленное бурение',description:'ГНБ - управляемый бестраншейный метод прокладывания подземных коммуникаций, основанный на использовании специальных буровых комплексов (установок).'},
+    {title:'Земляные работы',description:'В тот момент, когда вы решили построить свой дом и избавиться от маленькой квартиры и запыленного города, вам понадобятся земляные работы с фундаментом.'},
+    {title:'Демонтажные работы',description:'Снос ветхих строений должен производиться только специалистами. Это очень опасная и ответственная работа, которую мы будем рады выполнить для Вас.'},
+    {title:'Благоустройство и озеленение',description:'Завершающей стадией любого строительства становится благоустройство территории, потому что именно этом этапе придается законченный вид огромному комплексу или небольшому двору.'},
+    {title:'Устройство асфальто-бетонных покрытий',description:'Строим дороги и площадки из асфальтобетонного покрытия. Укладка асфальтобетонным покрытием состоит из нескольких трудоёмких этапов, которые занимает много времени.'},
+    {title:'Строительство теплосетей ТС',description:null},
+    {title:'Устройство сетей нвк(канализация,водопровод,ливневая канализация',description:null}
 ]
 </script>
 
 <style scoped>
+.fixx{
+    margin-top:-20px;
+}
+img{
+    width:200px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+}
 .inner-page{
     background:#f7f7f4;
     color:#252724;
@@ -103,13 +107,15 @@ const services=[
 .inner-section{
     padding:65px 0 80px;
 }
+.pageofheading{
+    color:rgb(199, 9, 9);
+}
 .page-heading{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
     padding-bottom:20px;
-    border-bottom:1px solid #dedfd9;
+    border-bottom:1px solid #a81717;
     color:#74776e;
     font-size:12px;
     font-weight:700;
@@ -117,11 +123,14 @@ const services=[
 }
 .service-list{
     margin-top:25px;
-    border-top:1px solid #dedfd9;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:24px;
+    border-top:none;
 }
 .service-card{
     display:grid;
-    grid-template-columns:65px minmax(0,1fr) 45px;
+    grid-template-columns:125px minmax(0,1fr) 45px;
     gap:25px;
     align-items:start;
     padding:29px 8px;

@@ -33,15 +33,6 @@
                     </div>
                 </div>
             </section>
-            <section class="inner-cta">
-                <div class="container inner-cta-row">
-                    <div>
-                        <span>ВАШ ОБЪЕКТ - СЛЕДУЮЩИЙ</span>
-                        <h2>Обсудим задачу<span>.</span></h2>
-                    </div>
-                    <a href="/#contacts" class="inner-button">Обсудить проект <span>↗</span></a>
-                </div>
-            </section>
         </main>
         <Footer/>
     </div>

@@ -17,35 +17,20 @@
                         <span>{{ certificates.length }} НАПРАВЛЕНИЙ</span>
                     </div>
                     <div class="certificate-grid">
-                        <article v-for="(certificate,index) in certificates" :key="certificate.title" class="certificate-card">
-                            <div class="certificate-preview">
-                                <span class="certificate-index">0{{ index+1 }}</span>
-                                <div class="certificate-sheet">
-                                    <span class="certificate-emblem">Н</span>
-                                    <span class="certificate-line"></span>
-                                    <strong>СЕРТИФИКАТ</strong>
-                                    <span class="certificate-subline"></span>
-                                    <span class="certificate-subline short"></span>
-                                    <span class="certificate-stamp">НЕВАСТРОЙ</span>
+                        <article v-for="(certificate,id) in certificates" :key="certificate.title" class="certificate-card">
+                            <div class="certificate-">
+                                <div class="imgs">
+                                    <img class="img" :src="getImageUrl(id+1)" alt="Загрузка изображения">
                                 </div>
                                 <span class="certificate-label">ДОКУМЕНТ</span>
                             </div>
                             <div class="certificate-info">
-                                <span>НАПРАВЛЕНИЕ {{ String(index+1).padStart(2,'0') }}</span>
+                                <span>Сертификат</span>
                                 <h2>{{ certificate.title }}</h2>
                             </div>
                         </article>
                     </div>
                     <p class="objects-note">На этой странице показаны тематические карточки. Для просмотра оригиналов необходимо добавить сканы сертификатов компании.</p>
-                </div>
-            </section>
-            <section class="inner-cta">
-                <div class="container inner-cta-row">
-                    <div>
-                        <span>ОСТАЛИСЬ ВОПРОСЫ?</span>
-                        <h2>Свяжитесь с нами<span>.</span></h2>
-                    </div>
-                    <router-link to="/contacts">КОНТАКТЫ</router-link>
                 </div>
             </section>
         </main>
@@ -57,16 +42,32 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
+const getImageUrl=(number:number)=>{                         
+    return new URL(`../images/certificates/photo${number}.jpg`,import.meta.url).href
+}
+
 const certificates=[
-    {title:'Антикоррозийные покрытия'},
-    {title:'Дорожные покрытия из тротуарных плит'},
-    {title:'Фундаменты зданий и сооружений'},
-    {title:'Наружные сети и канализация'},
-    {title:'Оконные и дверные проёмы'}
+    {title:'АТТЕСТАТ СООТВЕТСТВИЯ'},
+    {title:'АТТЕСТАТ СООТВЕТСТВИЯ'},
+    {title:'АТТЕСТАТ СООТВЕТСТВИЯ'},
+    {title:'СЕРТИФИКАТ СООТВЕТСТВИЯ СТБ ISO 9001-2015'},
+    {title:'АТТЕСТАТ СООТВЕТСТВИЯ'},
+    {title:'СЕРТИФИКАТ СООТВЕТСТВИЯ СТБ ISO 45001-2020'},
+    {title:'ТЕПЛОИЗОЛЯЦИЯ ОГРАЖДАЮЩИХ КОНСТРУКЦИЙ'},
+    {title:'ИЗОЛЯЦИОННЫЕ ПОКРЫТИЯ'},
+    {title:'АНТИКОРРОЗИЙНЫЕ ПОКРЫТИЯ'},
+    {title:'ДОРОЖНЫЕ ПОКРЫТИЯ ИЗ ПЛИТ'},
+    {title:'ФУНДАМЕНТЫ ЗДАНИЙ И СООРУЖЕНИЙ'},
+    {title:'НАРУЖНЫЕ СЕТИ И КАНАЛИЗАЦИЯ'},
+    {title:'ОКОННЫЕ И ДВЕРНЫЕ ПРОЁМЫ'},
 ]
 </script>
 
 <style>
+.img{
+    width:400px;
+    height:500px;
+}
 .inner-page{
 	background:#f7f7f4;
 	color:#252724;
