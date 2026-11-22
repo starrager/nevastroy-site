@@ -22,7 +22,6 @@
                                 <h3 class="title">{{ service.title }}</h3>
                                 <p class=description>{{ service.description }}</p>
                             </div>
-                            <span class="service-arrow">↗</span>
                         </article>
                     </div>
                 </div>
@@ -59,7 +58,6 @@ const services=[
     margin-top:-20px;
 }
 img{
-    width:200px;
     height:150px;
     border-radius:50%;
     object-fit:cover;
@@ -130,7 +128,7 @@ img{
 }
 .service-card{
     display:grid;
-    grid-template-columns:125px minmax(0,1fr) 45px;
+    grid-template-columns:150px minmax(0,1fr) 75px;
     gap:25px;
     align-items:start;
     padding:29px 8px;
@@ -157,15 +155,6 @@ img{
     color:#777a73;
     font-size:15px;
     line-height:1.8;
-}
-.service-arrow{
-    justify-self:end;
-    color:#d92f2f;
-    font-size:24px;
-    transition:transform .25s;
-}
-.service-card:hover .service-arrow{
-    transform:translate(4px,-4px);
 }
 .inner-cta{
     padding:65px 0;

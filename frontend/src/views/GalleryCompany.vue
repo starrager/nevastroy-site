@@ -15,21 +15,13 @@
 				<div class="container">
 					<div class="page-heading">
 						<span>РЕАЛИЗОВАННЫЕ ПРОЕКТЫ</span>
-						<span>{{ filteredProjects.length }} ФОТОГРАФИЙ</span>
-					</div>
-
-					<div class="gallery-filters">
-						<button v-for="category in categories" :key="category" :class="{active:activeCategory===category}" @click="activeCategory=category">
-							{{ category }}
-						</button>
+						<span>{{ projects.length }} ФОТОГРАФИЙ</span>
 					</div>
 
 					<div class="gallery-grid">
-						<article v-for="(project,index) in filteredProjects" :key="project.title" class="gallery-card" @click="openImage(project)">
+						<article v-for="(project,id) in projects" :key="id" class="gallery-card">
 							<div class="gallery-image">
-								<img :src="project.image" :alt="project.title" loading="lazy">
-								<span class="gallery-index">{{ String(index+1).padStart(2,'0') }}</span>
-								<span class="gallery-zoom">↗</span>
+								<img :src="getImageUrl(`photo${id+1}`)" :alt="project.title" loading="lazy">
 							</div>
 							<div class="gallery-info">
 								<span>{{ project.category }}</span>
@@ -37,36 +29,9 @@
 							</div>
 						</article>
 					</div>
-
-					<div v-if="filteredProjects.length===0" class="empty-gallery">
-						В этой категории пока нет фотографий.
-					</div>
-				</div>
-			</section>
-
-			<section class="inner-cta">
-				<div class="container inner-cta-row">
-					<div>
-						<span>ВАШ ПРОЕКТ МОЖЕТ БЫТЬ СЛЕДУЮЩИМ</span>
-						<h2>Начнём сотрудничество<span>.</span></h2>
-					</div>
-					<a href="/#contacts" class="inner-button">Связаться <span>↗</span></a>
 				</div>
 			</section>
 		</main>
-
-		<div v-if="selectedProject" class="lightbox" @click.self="selectedProject=null" @keydown.esc="selectedProject=null">
-			<button class="lightbox-close" @click="selectedProject=null">×</button>
-			<button class="lightbox-arrow prev" @click="changeImage(-1)">‹</button>
-			<div class="lightbox-content">
-				<img :src="selectedProject.image" :alt="selectedProject.title">
-				<div class="lightbox-info">
-					<span>{{ selectedProject.category }}</span>
-					<h2>{{ selectedProject.title }}</h2>
-				</div>
-			</div>
-			<button class="lightbox-arrow next" @click="changeImage(1)">›</button>
-		</div>
 	</div>
 	<Footer></Footer>
 </template>
@@ -76,37 +41,29 @@ import {computed,ref} from 'vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 
-const activeCategory=ref('Все')
-const selectedProject=ref<any>(null)
-
-const categories=['Все','Строительство','Благоустройство','Дорожные работы','Инженерные сети']
-
 const projects=[
-	{title:'Строительство жилого комплекса',category:'Строительство',image:'/images/gallery/project-1.jpg'},
-	{title:'Благоустройство территории',category:'Благоустройство',image:'/images/gallery/project-2.jpg'},
-	{title:'Устройство дорожного покрытия',category:'Дорожные работы',image:'/images/gallery/project-3.jpg'},
-	{title:'Монтаж инженерных коммуникаций',category:'Инженерные сети',image:'/images/gallery/project-4.jpg'},
-	{title:'Строительство промышленного объекта',category:'Строительство',image:'/images/gallery/project-5.jpg'},
-	{title:'Озеленение и благоустройство',category:'Благоустройство',image:'/images/gallery/project-6.jpg'},
-	{title:'Ремонт и устройство дорог',category:'Дорожные работы',image:'/images/gallery/project-7.jpg'},
-	{title:'Прокладка наружных сетей',category:'Инженерные сети',image:'/images/gallery/project-8.jpg'},
-	{title:'Строительно-монтажные работы',category:'Строительство',image:'/images/gallery/project-9.jpg'}
+	{title:'Торгово-административное здание',category:'Строительство'},
+	{title:'Здание неустановленного назначения по улице Франциска Скорины, 21',category:'Реконструкция'},
+	{title:'Жилого комплекса с объектами инфраструктуры по адресу: Минский р-н., Ждановичский с/с, аг. Ратомка',category:'Дорожные работы'},
+	{title:'Экспериментальный многофункциональный комплекс “Минск-Мир”. Проект застройки. 7-я очередь строительства. Генплан, благоустройство, инженерные сети.',category:'Строительство'},
+	{title:'Объект торговли строительными материалами по ул.Гоголя, 170а в г.Бобруйске',category:'Строительство'},
+	{title:'Административное здание по ул.Пинская 28а, г.Минск',category:'Строительство'},
+	{title:'Магазин «Евроопт» по адресу г.Орша, пер. 4-й Чернышевского, д. 4',category:'Реконструкция'},
+	{title:'Административно-складское здание с пунктом технического обслуживания и здание шиномонтажа по ул. Орджоникидзе, 104 в г. Бобруйске',category:'Строительство'},
+	{title:'Многофункциональное здание ООО «Еврологистик» корпус №1',category:'Строительство'},
+    {title:'Жилой дом в д. Дуброво Минского района',category:'Строительство'},
+    {title:'МСК-2 МЗКТ',category:'Модернизация фасадов'},
+    {title:'Многофункциональный комплекс в г. Минске по проспекту Победителей',category:'Строительство'},
+    {title:'Молочно-товарная ферма в д.Лешница Березинского района',category:'Модернизация фасадов'},
+    {title:'Реконструкция магазина общей площадью 1700м2 - наружные и внутренние отделочные работы, внутренние электромонтажные и сантехнические работы',category:'Модернизация'},
+    {title:'Поликлиника №17 по ул.Герасименко, 49 в г.Минске',category:'Комплекс работ'},
+    {title:'Многофункциональное здание ООО «Еврологистик» корпус №2',category:'Строительство'},
+    {title:'Жилой дом №10 по бульвару Дзержинского в г. Узда с устройством скатной кровли и благоустройством дворовой территории',category:'Капитальный ремонт'},
+    {title:'Многофункциональный развлекательный центр «Замок» по пр. Победителей, 65',category:'Комплекс работ'},
 ]
 
-const filteredProjects=computed(()=>{
-	if(activeCategory.value==='Все') return projects
-	return projects.filter(project=>project.category===activeCategory.value)
-})
-
-function openImage(project:any){
-	selectedProject.value=project
-}
-
-function changeImage(direction:number){
-	if(!selectedProject.value) return
-	const index=filteredProjects.value.findIndex(project=>project===selectedProject.value)
-	const nextIndex=(index+direction+filteredProjects.value.length)%filteredProjects.value.length
-	selectedProject.value=filteredProjects.value[nextIndex]
+const getImageUrl=(name:any)=>{
+    return new URL(`../images/gallery/${name}.png`,import.meta.url).href
 }
 </script>
     
@@ -215,9 +172,6 @@ function changeImage(direction:number){
     object-fit:cover;
     transition:transform .5s ease;
 }
-.gallery-card:hover .gallery-image img{
-    transform:scale(1.06);
-}
 .gallery-index{
     position:absolute;
     top:14px;
@@ -226,25 +180,6 @@ function changeImage(direction:number){
     background:rgba(37,44,46,.8);
     color:#fff;
     font-size:11px;
-}
-.gallery-zoom{
-    position:absolute;
-    right:14px;
-    bottom:14px;
-    width:38px;
-    height:38px;
-    display:grid;
-    place-items:center;
-    background:#ed3434;
-    color:#fff;
-    font-size:21px;
-    opacity:0;
-    transform:translateY(8px);
-    transition:all .25s;
-}
-.gallery-card:hover .gallery-zoom{
-    opacity:1;
-    transform:translateY(0);
 }
 .gallery-info{
     padding:16px 2px;

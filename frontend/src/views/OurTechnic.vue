@@ -2,44 +2,24 @@
     <div class="inner-page">
         <Header/>
         <main>
-            <section class="inner-hero">
-                <div class="container">
-                    <span class="page-kicker">05 / ТЕХНИЧЕСКАЯ БАЗА</span>
-                    <h1>Наша техника<span>.</span></h1>
-                    <p>Собственный парк строительной и специальной техники для выполнения работ различной сложности.</p>
-                    <div class="page-breadcrumb">Главная / Наша техника</div>
-                </div>
-            </section>
             <section class="inner-section">
                 <div class="container">
                     <div class="page-heading">
-                        <span>ПАРК ТЕХНИКИ</span>
-                        <span>{{ equipment.length }} ЕДИНИЦ</span>
+                        <span class="price">ПАРК ТЕХНИКИ</span>
+                        <span class="price">{{ equipment.length }} ЕДИНИЦ</span>
                     </div>
                     <div class="equipment-grid">
-                        <article v-for="(item,index) in equipment" :key="item.name" class="equipment-card">
+                        <article v-for="(item,id) in equipment" :key="id" class="equipment-card">
                             <div class="equipment-preview">
-                                <span class="equipment-index">0{{ index+1 }}</span>
-                                <div class="equipment-symbol">{{ item.symbol }}</div>
-                                <span class="equipment-category">{{ item.category }}</span>
+                                <img :src="getImageUrl(id+1)" alt="Загрузка изображения">
                             </div>
                             <div class="equipment-info">
-                                <span>СПЕЦТЕХНИКА</span>
                                 <h2>{{ item.name }}</h2>
-                                <p>{{ item.description }}</p>
+                                <p><span class="price">ЦЕНА ПО ЗАПРОСУ</span></p>
                             </div>
                         </article>
                     </div>
                     <p class="objects-note">Состав и доступность техники уточняются при согласовании проекта.</p>
-                </div>
-            </section>
-            <section class="inner-cta">
-                <div class="container inner-cta-row">
-                    <div>
-                        <span>НУЖНА ТЕХНИКА НА ОБЪЕКТ?</span>
-                        <h2>Обсудим условия<span>.</span></h2>
-                    </div>
-                    <a href="/#contacts" class="inner-button">Оставить заявку <span>↗</span></a>
                 </div>
             </section>
         </main>
@@ -51,23 +31,34 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
+const getImageUrl=(number:number)=>{                         
+    return new URL(`../images/technic/photo${number}.jpg`,import.meta.url).href
+}
+
 const equipment=[
-    {name:'Экскаватор-погрузчик CASE 695',category:'Экскаватор-погрузчик',symbol:'Э',description:'Земляные, погрузочные и планировочные работы.'},
-    {name:'Экскаватор-погрузчик JCB 4 CX',category:'Экскаватор-погрузчик',symbol:'Э',description:'Разработка грунта и работа на строительных площадках.'},
-    {name:'Экскаватор-погрузчик CAT 428',category:'Экскаватор-погрузчик',symbol:'Э',description:'Погрузка материалов и выполнение земляных работ.'},
-    {name:'Фронтальный погрузчик SHANTUI SL30',category:'Погрузчик',symbol:'П',description:'Перемещение сыпучих материалов и погрузка.'},
-    {name:'Мини-погрузчик BOBCAT 190',category:'Мини-погрузчик',symbol:'М',description:'Работы на ограниченных площадках и в стеснённых условиях.'},
-    {name:'Гусеничный экскаватор HITACHI ZX200-5G',category:'Экскаватор',symbol:'Э',description:'Разработка котлованов, траншей и перемещение грунта.'},
-    {name:'Самосвал MAN TGA 390',category:'Самосвал',symbol:'С',description:'Перевозка грунта, строительных материалов и отходов.'},
-    {name:'Колёсный экскаватор CAT 318',category:'Экскаватор',symbol:'Э',description:'Земляные и погрузочные работы на строительных объектах.'},
-    {name:'Грунтовый каток CAT CS68B',category:'Дорожная техника',symbol:'К',description:'Уплотнение грунта при подготовке оснований.'},
-    {name:'Бульдозер CAT D5K',category:'Бульдозер',symbol:'Б',description:'Планировка площадок и перемещение грунта.'},
-    {name:'Экскаватор HYUNDAI 250',category:'Экскаватор',symbol:'Э',description:'Выполнение масштабных земляных работ.'},
-    {name:'Гусеничный экскаватор HITACHI 200',category:'Экскаватор',symbol:'Э',description:'Разработка грунта и подготовка строительных площадок.'}
+    {name:'ЭКСКAВАТОР-ПОГРУЗЧИК CASE 695'},
+    {name:'ЭКСКAВАТОР-ПОГРУЗЧИК JCB 4 CX'},
+    {name:'ЭКСКAВАТОР-ПОГРУЗЧИК CAT 428'},
+    {name:'ФРОНТАЛЬНЫЙ ПОГРУЗЧИК SHANTUI SL30'},
+    {name:'МИНИ-ПОГРУЗЧИК BOBCAT 190'},
+    {name:'ГУСЕНИЧНЫЙ ЭКСКAВАТОР HITACHI ZX200-5G'},
+    {name:'САМОСВАЛ МАН TGA 390'},
+    {name:'ЭКСКАВАТОР КОЛЕСНЫЙ CAT 318'},
+    {name:'КАТОК ГРУНТОВЫЙ CAT CS68B 16ТОНН'},
+    {name:'БУЛЬДОЗЕР CAT D5K'},
+    {name:'ЭКСКАВАТОР HYUNDAI 250'},
+    {name:'ЭКСКАВАТОР ГУСЕНИЧНЫЙ HITACHI 200'},
+    {name:'Фронтальный погрузчик LiuGong 835H'},
+    {name:'Бульдозер LIEBHERR PR 734 LGP'},
+    {name:'Погрузчик фронтальный SDLG'},
+    {name:'Эксковатор SUNWARD 265F'},
 ]
 </script>
 
 <style scoped>
+.price{
+    color:rgb(199, 9, 9);
+}
 .inner-page{
     background:#f7f7f4;
     color:#252724;
@@ -130,17 +121,35 @@ const equipment=[
     margin-top:35px;
 }
 .equipment-card{
-    min-width:0;
-}
-.equipment-preview{
-    height:230px;
-    position:relative;
     display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#e9eae4;
+    flex-direction:column;
+    background:#f3f4f6;
     border:1px solid #dedfd9;
+    height:100%;
     overflow:hidden;
+}
+.equipment-preview img{
+    height:100%;
+    width:100%;
+    object-fit:cover;
+    display:block;
+}
+.equipment-info{
+    margin-left:20px;
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+}
+.equipment-info h2{
+    margin:0; 
+    font-size:18px;
+    font-weight:500;
+    line-height:1.3;
+}
+.equipment-info p{
+    margin:0;
+    margin-top:auto;
+    font-size:12px;
 }
 .equipment-symbol{
     font-size:100px;
