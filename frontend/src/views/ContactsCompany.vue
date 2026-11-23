@@ -17,40 +17,70 @@
                     <span>НЕВАСТРОЙ</span>
                 </div>
                 <div class="contacts-layout">
-                    <div class="contacts-main">
-                        <div class="contact-item">
-                            <span>ТЕЛЕФОН</span>
-                            <a :href="`tel:${phoneLink}`">{{ phone }}</a>
-                        </div>
-                        <div class="contact-item">
-                            <span>ЭЛЕКТРОННАЯ ПОЧТА</span>
-                            <a :href="`mailto:${email}`">{{ email }}</a>
-                        </div>
-                        <div class="contact-item">
-                            <span>АДРЕС</span>
-                            <p>{{ address }}</p>
-                        </div>
-                        <div class="contact-item">
-                            <span>РЕЖИМ РАБОТЫ</span>
-                            <p>{{ schedule }}</p>
+                    <div class="contacts-info">
+                        <h2 class="section-title">Информация</h2>
+                        <p class="section-desc">Контактные данные</p>
+                        <hr>
+                        <div class="info-block">
+                            <p><strong>Торговая марка НЕВАСТРОЙ</strong></p>
+                            
+                            <h5>Реквизиты:</h5>
+                            <p>ООО «Авикомтрейд»</p>
+                            
+                            <h5>УНП:</h5>
+                            <p>191773148</p>
+                            
+                            <h5>Юридический адрес:</h5>
+                            <p>Республика Беларусь, 220002<br>г. Минск, пр-т. Машерова, 25-3, комн. 409</p>
+                            
+                            <h5>Телефоны:</h5>
+                            <p>тел./ф.: +375 (17) 334 66 14</p>
+                            <p>тел./ф. бухгалтерии: 8 (017) 35013 27</p>
+                            <p>+375 (29) 669-66-20 – мобильный</p>
+                            
+                            <h5>Email:</h5>
+                            <p><a href="mailto:avik@neva.by">avik@neva.by</a></p>
+                            
+                            <h5>Сайт:</h5>
+                            <p><a href="https://www.neva.by" target="_blank">www.neva.by</a></p>
+                            
+                            <h5>Расчетный счет:</h5>
+                            <p>3012172040007</p>
+                            
+                            <h5>Банк:</h5>
+                            <p>ЗАО «Белорусско-Швейцарский Банк «БСБ Банк»<br>г. Минск, пр-т Победителей, д.23/4<br>БИК 153001175</p>
+                            
+                            <h5>Директор:</h5>
+                            <p>Вечер Дмитрий Анатольевич</p>
                         </div>
                     </div>
-                    <div class="contacts-aside">
-                        <span class="contacts-aside-kicker">НЕВАСТРОЙ</span>
-                        <h2>Открыты к новым проектам<span>.</span></h2>
-                        <p>Оставьте заявку или свяжитесь с нами удобным способом. Обсудим детали и подберём решение под вашу задачу.</p>
-                        <a :href="`mailto:${email}`" class="inner-button">Написать нам <span>↗</span></a>
+
+                    <div class="contacts-form">
+                        <h2 class="section-title">Обратная связь</h2>
+                        <p class="section-desc">Оставьте нам сообщение</p>
+                        <hr>
+                        <form @submit.prevent>
+                            <div class="form-group">
+                                <label>Имя <span>*</span></label>
+                                <input type="text" placeholder="Ваше имя" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-mail <span>*</span></label>
+                                <input type="email" placeholder="Ваш E-mail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Телефон</label>
+                                <input type="tel" placeholder="Ваш телефон">
+                            </div>
+                            <div class="form-group">
+                                <label>Сообщение <span>*</span></label>
+                                <textarea rows="5" placeholder="Ваше сообщение" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Отправить</button>
+                            <p class="form-note">* обязательные поля</p>
+                        </form>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="inner-cta">
-            <div class="container inner-cta-row">
-                <div>
-                    <span>ЕСТЬ ВОПРОСЫ ПО ПРОЕКТУ?</span>
-                    <h2>Мы готовы помочь<span>.</span></h2>
-                </div>
-                <a :href="`tel:${phoneLink}`" class="inner-button">Позвонить <span>↗</span></a>
             </div>
         </section>
     </main>
@@ -61,214 +91,104 @@
 <script setup lang="ts">
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
-
-const phone='+7 (999) 999-99-99'
-const phoneLink='+7__________'
-const email='info@.ru'
-const address='Укажите адрес офиса'
-const schedule='Понедельник - пятница, 09:00-18:00'
 </script>
-    
-<style scoped>
-.inner-page{
-    background:#f7f7f4;
-    color:#252724;
-    min-height:100vh;
-}
-.inner-hero{
-    background:#252c2e;
-    color:#fff;
-    padding:88px 0 36px;
-}
-.page-kicker{
-    font-size:13px;
-    letter-spacing:.14em;
-    color:#c5c8c0;
-    font-weight:700;
-}
-.inner-hero h1{
-    margin:34px 0 18px;
-    font-size:clamp(48px,6vw,76px);
+
+<style>
+.section-title{
+    margin:0 0 10px;
+    font-size:28px;
     font-weight:500;
-    letter-spacing:-.06em;
-    line-height:1.05;
+    letter-spacing:-.04em;
+    color:#292c28;
 }
-.inner-hero h1 span,
-.inner-cta h2 span,
-.contacts-aside h2 span{
-    color:#ed3434;
+.section-desc{
+    margin:0 0 20px;
+    font-size:14px;
+    color:#777a73;
 }
-.inner-hero p{
-    max-width:570px;
-    color:#d1d3cd;
-    font-size:18px;
-    line-height:1.8;
+hr{
+    margin:0 0 30px;
+    border:0;
+    border-top:1px solid #dedfd9;
 }
-.page-breadcrumb{
-    margin-top:65px;
-    padding-top:18px;
-    border-top:1px solid rgba(255,255,255,.2);
+.info-block h5{
+    margin:25px 0 8px;
     font-size:13px;
-    color:#b8bbb3;
-}
-.inner-section{
-    padding:65px 0 80px;
-}
-.page-heading{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding-bottom:20px;
-    border-bottom:1px solid #dedfd9;
-    color:#74776e;
-    font-size:12px;
     font-weight:700;
-    letter-spacing:.12em;
+    color:#777a73;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+}
+.info-block p{
+    margin:0 0 10px;
+    font-size:16px;
+    line-height:1.6;
+    color:#292c28;
+}
+.info-block a{
+    color:#292c28;
+    text-decoration:none;
+    transition:color .2s;
+}
+.info-block a:hover{
+    color:#d92f2f;
+}
+.form-group{
+    margin-bottom:20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.form-group label{
+    font-size:13px;
+    font-weight:700;
+    color:#292c28;
+}
+.form-group label span{
+    color:#d92f2f;
+}
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #d8d9d2;
+    background:#fff;
+    color:#292c28;
+    font-family:inherit;
+    font-size:15px;
+    transition:border-color .2s;
+}
+.form-group input:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:#292c28;
+}
+.form-group textarea{
+    resize:vertical;
+}
+.submit-btn{
+    padding:15px 30px;
+    background:#292c28;
+    color:#fff;
+    border:none;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background .2s;
+}
+.submit-btn:hover{
+    background:#444740;
+}
+.form-note{
+    margin:10px 0 0;
+    font-size:12px;
+    color:#777a73;
 }
 .contacts-layout{
     display:grid;
-    grid-template-columns:1fr .8fr;
+    grid-template-columns:1fr 1.5fr;
     gap:65px;
     padding-top:40px;
-}
-.contacts-main{
-    border-top:1px solid #dedfd9;
-}
-.contact-item{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    padding:25px 5px;
-    border-bottom:1px solid #dedfd9;
-}
-.contact-item>span{
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:.12em;
-    color:#85887f;
-}
-.contact-item a,
-.contact-item p{
-    margin:0;
-    color:#292c28;
-    font-size:21px;
-    line-height:1.5;
-    text-decoration:none;
-}
-.contact-item a:hover{
-    color:#d92f2f;
-}
-.contacts-aside{
-    padding:35px;
-    background:#e9eae4;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-}
-.contacts-aside-kicker{
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.13em;
-    color:#777a73;
-}
-.contacts-aside h2{
-    margin:30px 0 18px;
-    font-size:clamp(32px,4vw,46px);
-    font-weight:500;
-    line-height:1.15;
-    letter-spacing:-.05em;
-}
-.contacts-aside p{
-    margin:0 0 28px;
-    color:#777a73;
-    font-size:15px;
-    line-height:1.8;
-}
-.inner-button{
-    min-height:54px;
-    padding:0 24px;
-    display:inline-flex;
-    align-items:center;
-    gap:30px;
-    background:#292c28;
-    color:#fff;
-    font-size:15px;
-    font-weight:700;
-    text-decoration:none;
-    transition:background .2s;
-}
-.inner-button span{
-    color:#ed3434;
-    font-size:20px;
-}
-.inner-button:hover{
-    background:#444740;
-}
-.inner-cta{
-    padding:65px 0;
-    background:#e9eae4;
-}
-.inner-cta-row{
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:30px;
-}
-.inner-cta-row>div>span{
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.13em;
-    color:#777a73;
-}
-.inner-cta h2{
-    margin:22px 0 0;
-    font-size:clamp(38px,5vw,60px);
-    font-weight:500;
-    letter-spacing:-.055em;
-}
-@media(max-width:760px){
-    .inner-hero{
-        padding-top:65px;
-    }
-    .inner-hero h1{
-        font-size:48px;
-    }
-    .inner-hero p{
-        font-size:16px;
-    }
-    .inner-section{
-        padding:48px 0 55px;
-    }
-    .contacts-layout{
-        grid-template-columns:1fr;
-        gap:25px;
-        padding-top:28px;
-    }
-    .contacts-aside{
-        padding:28px;
-    }
-    .contact-item a,
-    .contact-item p{
-        font-size:18px;
-    }
-    .inner-cta{
-        padding:45px 0;
-    }
-    .inner-cta-row{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-}
-@media(max-width:420px){
-    .inner-hero h1{
-        font-size:41px;
-    }
-    .inner-hero p{
-        font-size:15px;
-    }
-    .page-heading{
-        font-size:10px;
-    }
 }
 </style>
