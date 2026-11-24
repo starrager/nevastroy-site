@@ -31,7 +31,7 @@
                 <div class="footer-column footer-contact">
                     <span class="footer-heading">ОБСУДИТЬ ПРОЕКТ</span>
                     <p>Готовы ответить на вопросы и обсудить вашу задачу.</p>
-                    <a class="underlined-link" href="mailto:info@example.by">Написать нам <span>↗</span></a>
+                    <a class="underlined-link" href="/contacts">Написать нам</a>
                 </div>
             </div>
             <div class="footer-bottom">

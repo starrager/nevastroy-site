@@ -4,7 +4,7 @@
 			<Header></Header>
 			<section class="inner-hero">
 				<div class="container">
-					<span class="page-kicker">06 / НАШИ РАБОТЫ</span>
+					<span class="page-kicker">05 / НАШИ РАБОТЫ</span>
 					<h1>Галерея<span>.</span></h1>
 					<p>Результаты нашей работы — реализованные строительные проекты, благоустройство территорий и инженерные решения.</p>
 					<div class="page-breadcrumb">Главная / Галерея</div>

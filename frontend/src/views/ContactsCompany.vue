@@ -4,7 +4,7 @@
     <main>
         <section class="inner-hero">
             <div class="container">
-                <span class="page-kicker">07 / БУДЕМ НА СВЯЗИ</span>
+                <span class="page-kicker">06 / БУДЕМ НА СВЯЗИ</span>
                 <h1>Контакты<span>.</span></h1>
                 <p>Свяжитесь с нами, чтобы обсудить ваш проект, получить консультацию или задать вопрос.</p>
                 <div class="page-breadcrumb">Главная / Контакты</div>
@@ -28,30 +28,30 @@
                             <p>ООО «Авикомтрейд»</p>
                             
                             <h5>УНП:</h5>
-                            <p>191773148</p>
+                            <p>562523134</p>
                             
-                            <h5>Юридический адрес:</h5>
-                            <p>Республика Беларусь, 220002<br>г. Минск, пр-т. Машерова, 25-3, комн. 409</p>
+                            <h5 class="h5">Юридический адрес:</h5>
+                            <p>Республика Татарстан, 220002<br>г. Казань, пр-т. Машерова, 25-3, комн. 409</p>
                             
                             <h5>Телефоны:</h5>
-                            <p>тел./ф.: +375 (17) 334 66 14</p>
-                            <p>тел./ф. бухгалтерии: 8 (017) 35013 27</p>
-                            <p>+375 (29) 669-66-20 – мобильный</p>
+                            <p>тел./ф.: +797 (23) 563 34 55</p>
+                            <p>тел./ф. бухгалтерии: 8 (932) 84652 34</p>
+                            <p>+795 (76) 968-57-25 – мобильный</p>
                             
                             <h5>Email:</h5>
-                            <p><a href="mailto:avik@neva.by">avik@neva.by</a></p>
+                            <p><a href="mailto:nevastroy.by@gmail.com">nevastroy.by@gmail.com</a></p>
                             
                             <h5>Сайт:</h5>
-                            <p><a href="https://www.neva.by" target="_blank">www.neva.by</a></p>
+                            <p><a href="" target="_blank"></a></p>
                             
                             <h5>Расчетный счет:</h5>
-                            <p>3012172040007</p>
+                            <p>4614112042569</p>
                             
                             <h5>Банк:</h5>
-                            <p>ЗАО «Белорусско-Швейцарский Банк «БСБ Банк»<br>г. Минск, пр-т Победителей, д.23/4<br>БИК 153001175</p>
+                            <p>ЗАО «Белорусско-Швейцарский Банк «БСБ Банк»<br>г. Минск, пр-т Победителей, д.23/4<br>БИК 592251975</p>
                             
                             <h5>Директор:</h5>
-                            <p>Вечер Дмитрий Анатольевич</p>
+                            <p>Вечер Анатолий Дмитриевич</p>
                         </div>
                     </div>
 
@@ -59,22 +59,22 @@
                         <h2 class="section-title">Обратная связь</h2>
                         <p class="section-desc">Оставьте нам сообщение</p>
                         <hr>
-                        <form @submit.prevent>
+                        <form @submit.prevent="submit">
                             <div class="form-group">
                                 <label>Имя <span>*</span></label>
-                                <input type="text" placeholder="Ваше имя" required>
+                                <input type="text" v-model="name" placeholder="Ваше имя" required>
                             </div>
                             <div class="form-group">
                                 <label>E-mail <span>*</span></label>
-                                <input type="email" placeholder="Ваш E-mail" required>
+                                <input type="text" v-model="email" placeholder="Ваш E-mail" required>
                             </div>
                             <div class="form-group">
                                 <label>Телефон</label>
-                                <input type="tel" placeholder="Ваш телефон">
+                                <input type="tel" v-model="phone" placeholder="Ваш телефон" required>
                             </div>
                             <div class="form-group">
                                 <label>Сообщение <span>*</span></label>
-                                <textarea rows="5" placeholder="Ваше сообщение" required></textarea>
+                                <textarea rows="5" v-model="message" placeholder="Ваше сообщение" required></textarea>
                             </div>
                             <button type="submit" class="submit-btn">Отправить</button>
                             <p class="form-note">* обязательные поля</p>
@@ -91,6 +91,35 @@
 <script setup lang="ts">
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
+
+import {ref} from 'vue'
+import axios from 'axios'
+
+const name=ref('')
+const email=ref('')
+const phone=ref('')
+const message=ref('')
+
+const submit=async()=>{
+    try{
+        if(!message.value||!name.value||!email.value||!phone){
+            alert('Заполните все поля!')
+            return
+        }
+
+        const response=await axios.post('http://localhost:5178/api/add',{
+            name:name.value,email:email.value,phone:phone.value,message:message.value
+        })
+
+        name.value=''
+        email.value=''
+        phone.value=''
+        message.value=''
+    }catch(error){
+        console.log(error)
+    }
+}
+
 </script>
 
 <style>
@@ -112,12 +141,11 @@ hr{
     border-top:1px solid #dedfd9;
 }
 .info-block h5{
-    margin:25px 0 8px;
-    font-size:13px;
-    font-weight:700;
-    color:#777a73;
-    text-transform:uppercase;
-    letter-spacing:.05em;
+    margin:10px 0 10px 0;
+    font-size:20px;
+    font-weight:500;
+    letter-spacing:-.04em;
+    color:#292c28;
 }
 .info-block p{
     margin:0 0 10px;

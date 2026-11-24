@@ -7,6 +7,8 @@ import ServicesCompany from '@/views/ServicesCompany.vue'
 import OurTechnic from '@/views/OurTechnic.vue'
 import GalleryCompany from '@/views/GalleryCompany.vue'
 import ContactsCompany from '@/views/ContactsCompany.vue'
+import LoginPage from '@/views/LoginPage.vue'
+import AdminPanel from '@/views/AdminPanel.vue'
 
 const router=createRouter({
     history:createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +44,14 @@ const router=createRouter({
         {
             path:'/contacts',
             component:ContactsCompany
+        },
+        {
+            path:'/login',
+            component:LoginPage
+        },
+        {
+            path:'/adminpanel',
+            component:AdminPanel
         }
     ]
 })

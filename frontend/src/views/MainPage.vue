@@ -117,26 +117,12 @@
                                     <span class="project-category">{{ project.category }}</span>
                                     <h3>{{ project.title }}</h3>
                                 </div>
-                                <span class="project-location">{{ project.location }}</span>
                             </div>
                         </a>
                     </div>
                     <p class="portfolio-disclaimer">
                         Визуальные примеры для концепции сайта. Не являются подтверждёнными объектами компании.
                     </p>
-                </div>
-            </section>
-            <section class="contact-banner">
-                <div class="container contact-banner-inner">
-                    <div>
-                        <span class="section-index">04 - СОТРУДНИЧЕСТВО</span>
-                        <h2>
-                            Есть задача?<br />
-                            <span>Давайте обсудим.</span>
-                        </h2>
-                        <p>Расскажите о проекте - обсудим возможные решения и дальнейшие шаги.</p>
-                    </div>
-                    <a class="button button-dark" href="#contacts">Связаться с нами <span>↗</span></a>
                 </div>
             </section>
         </main>
@@ -180,19 +166,16 @@ const projects=[
     {
         title:'Промышленный комплекс',
         category:'Промышленное строительство',
-        location:'Республика Татарстан',
         image:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=85',
     },
     {
         title:'Современный деловой центр',
         category:'Коммерческая недвижимость',
-        location:'Казань',
         image:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85',
     },
     {
         title:'Объект городской инфраструктуры',
         category:'Общестроительные работы',
-        location:'Республика Татарстан',
         image:'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=85',
     }
 ]
