@@ -16,7 +16,8 @@ export const login=async(req:Request,res:Response)=>{
         })
 
         if(!admin)return res.status(401).json({error:'Неверный логин или пароль'})
-
+        
+        return res.json({id:admin.id,login:admin.login})
     }catch(error){
         console.log(error)
         res.status(501).json({error:error})
