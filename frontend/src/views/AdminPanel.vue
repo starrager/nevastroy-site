@@ -16,12 +16,15 @@
 					<div class="page-heading">
 						<span>ИСТОРИЯ ЗАЯВОК</span>
 						<span>ВСЕГО: {{ requests.length }}</span>
+                        <button class="btn" @click="showallrequests()">
+                            {{showflag?'Активные':'Архив'}}
+                        </button>
 					</div>
 
 					<div class="admin-grid">
-						<article v-for="req in requests" :key="req.id" class="admin-card">
+						<article v-for="(req,index) in requests":key="req.id" class="admin-card">
 							<div class="admin-card-header">
-								<span class="req-id">#{{ req.id }}</span>
+								<span class="req-id"># {{ index+1 }}</span>
 								<span class="req-date">{{ new Date(req.createdAt).toLocaleDateString('ru-RU') }}</span>
 							</div>
 							<div class="admin-card-body">
@@ -31,14 +34,11 @@
 									<a :href="`mailto:${req.email}`">{{ req.email }}</a>
 								</div>
 								<p class="req-message">{{ req.message }}</p>
-							</div>
-							<div class="admin-card-footer">
-								<button class="action-btn done" @click="updateStatus(req.id, 'done')">Выполнено</button>
-								<button class="action-btn delete" @click="deleteRequest(req.id)">Удалить</button>
+                                <button class="btn" @click="changestatus(req.id)">В архив</button>
 							</div>
 						</article>
 						
-						<div v-if="requests.length === 0" class="empty-state">
+						<div v-if="requests.length===0" class="empty-state">
 							Заявок пока нет.
 						</div>
 					</div>
@@ -55,29 +55,60 @@ import {useRouter} from 'vue-router'
 
 const router=useRouter()
 const requests=ref<any[]>([])
+const showflag=ref(true)
 
 const logout=()=>{
     localStorage.removeItem('token')
     router.push('/login')
 }
 
-const getrequests=async()=>{
+const showallrequests=async()=>{
     try{
-        const response=await axios.get('http://localhost:5178/api/requests')
+        showflag.value=!showflag.value
+
+        const response=await axios.get('http://localhost:5178/api/requests',{
+            params:{choice:showflag.value?'1':'2'}
+        })
+
+        requests.value=response.data
     }catch(error){
         console.error(error)
     }
 }
 
-const updateStatus=(id:number,status:string)=>{
-    console.log(`Заявка ${id} изменена на статус:${status}`)
-}
-
-const deleteRequest=(id:number)=>{
-    if(confirm('Удалить заявку?')){
-        requests.value=requests.value.filter(r=>r.id!==id)
+const getrequests=async()=>{
+    try{
+        const response=await axios.get('http://localhost:5178/api/requests',{
+            params:{choice:'1'}
+        })
+        requests.value=response.data
+    }catch(error){
+        console.error(error)
     }
 }
+
+const changestatus=async(id:number)=>{
+    try{
+        const response=await axios.put(`http://localhost:5178/api/change/${id}`,{status:'archived'})
+        getrequests()
+    }catch(error){
+        console.error(error)
+    }
+}
+
+const deletefrombd=async(id:number)=>{
+    try{
+        const response=await axios.delete(`http://localhost:5178/api/deletefrombd/${id}`)
+        getrequests()
+        console.log('success deleted')
+    }catch(error){
+        console.error(error)
+    }
+}
+
+onMounted(()=>{
+    getrequests()
+})
 </script>
 
 <style scoped>

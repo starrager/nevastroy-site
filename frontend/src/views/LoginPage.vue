@@ -6,14 +6,14 @@
 				<h1>Вход в панель<span>.</span></h1>
 				<p>Введите логин и пароль для доступа к заявкам.</p>
 				
-				<form @submit.prevent="login" class="auth-form">
+				<form @submit.prevent="loginin" class="auth-form">
 					<div class="form-group">
 						<label>Логин</label>
-						<input type="text" v-model="loginname" placeholder="admin" required>
+						<input type="text" v-model="login" placeholder="admin" required>
 					</div>
 					<div class="form-group">
 						<label>Пароль</label>
-						<input type="password" v-model="passwordname" placeholder="***********" required>
+						<input type="password" v-model="password" placeholder="***********" required>
 					</div>
 					<button type="submit" class="submit-btn">Войти</button>
 					<p class="error-msg" v-if="error">{{ error }}</p>
@@ -26,18 +26,20 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
+import axios from 'axios'
 
 const router=useRouter()
-const loginname=ref('')
-const passwordname=ref('')
+const login=ref('')
+const password=ref('')
 const error=ref('')
 
-const login=()=>{
-    if(loginname.value==='admin'&&passwordname.value==='iBhKBWDK9cT'){
+const loginin=async()=>{
+    try{
+        const response=await axios.post('http://localhost:5178/login',{login:login.value,password:password.value})
         localStorage.setItem('token','fake-jwt-token-123')
         router.push('/adminpanel')
-    }else{
-        error.value='Неверный логин или пароль'
+    }catch(error){
+        console.error(error)
     }
 }
 </script>

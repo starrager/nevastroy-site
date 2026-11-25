@@ -115,6 +115,8 @@ const submit=async()=>{
         email.value=''
         phone.value=''
         message.value=''
+
+        alert('Заявка успешно отправлена. Ожидайте звонка или письма на почту')
     }catch(error){
         console.log(error)
     }
