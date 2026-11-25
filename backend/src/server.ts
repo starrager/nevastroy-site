@@ -15,7 +15,6 @@ import requestLogin from './routes/login.routes'
 app.use('/api',requestRoutes)
 app.use('/login',requestLogin)
 
-
 app.listen(PORT,()=>{
     console.log(`Server running on http://localhost:${PORT}`);
 });

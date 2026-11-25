@@ -4,13 +4,13 @@ const prisma=new PrismaClient()
 
 export const login=async(req:Request,res:Response)=>{
     try{
-        const {name,password}=req.body
+        const {login,password}=req.body
 
-        if(!name||!password)return res.status(501).json({error:'Неверный логин или пароль'})
+        if(!login||!password)return res.status(501).json({error:'Неверный логин или пароль'})
 
         const admin=await prisma.admin.findFirst({
             where:{
-                login:name,
+                login:login,
                 password:password
             }
         })

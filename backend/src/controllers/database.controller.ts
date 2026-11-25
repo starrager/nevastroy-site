@@ -19,11 +19,41 @@ export const addtodatabase=async(req:Request,res:Response)=>{
 
 export const getfromdatabase=async(req:Request,res:Response)=>{
     try{
-        const database=await prisma.request.findMany({})
+        const choice=req.query.choice as string
 
-        res.status(200).json(database)
+        if(choice==='2'){
+            const database=await prisma.request.findMany({where:{status:'archived'}})
+            res.status(200).json(database)
+        }
+        else if(choice==='1'){
+            const database=await prisma.request.findMany({where:{status:{not:'archived'}}})
+            res.status(200).json(database)
+        }
+        
     }catch(error){
         console.error(error)
         res.status(500).json({error:error})
+    }
+}
+
+export const deletefromdatabase=async(req:Request,res:Response)=>{
+    try{
+        const id=Number(req.params.id)
+        const del=await prisma.request.delete({where:{id}})
+    }catch(error){
+        console.error(error)
+        res.status(501).json({error:'Ошибка удаления из базы данных'})
+    }
+}
+
+export const changestatus=async(req:Request,res:Response)=>{
+    try{
+        const id=Number(req.params.id)
+        const response=await prisma.request.update({where:{id},data:{status:req.body.status}})
+        
+        return res.json(response)
+    }catch(error){
+        console.error(error)
+        res.status(501).json({errpr:'ошибка изменения статуса'})
     }
 }
