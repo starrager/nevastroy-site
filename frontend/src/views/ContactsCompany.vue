@@ -62,7 +62,7 @@
                         <form @submit.prevent="submit">
                             <div class="form-group">
                                 <label>Имя <span>*</span></label>
-                                <input type="text" v-model="name" placeholder="Ваше имя" required>
+                                <input type="text" v-model="name" placeholder="Иванов Иван Иванович" required>
                             </div>
                             <div class="form-group">
                                 <label>E-mail <span>*</span></label>
@@ -94,11 +94,13 @@ import Footer from '../components/Footer.vue'
 
 import {ref} from 'vue'
 import axios from 'axios'
+import { useToast } from 'vue-toastification'
 
 const name=ref('')
 const email=ref('')
 const phone=ref('')
 const message=ref('')
+const toast=useToast()
 
 const submit=async()=>{
     try{
@@ -116,7 +118,7 @@ const submit=async()=>{
         phone.value=''
         message.value=''
 
-        alert('Заявка успешно отправлена. Ожидайте звонка или письма на почту')
+        toast.success('Заявка отправлена')
     }catch(error){
         console.log(error)
     }

@@ -67,7 +67,8 @@ const showallrequests=async()=>{
         showflag.value=!showflag.value
 
         const response=await axios.get('http://localhost:5178/api/requests',{
-            params:{choice:showflag.value?'1':'2'}
+            params:{choice:showflag.value?'1':'2'},
+            headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
         })
 
         requests.value=response.data
@@ -79,7 +80,8 @@ const showallrequests=async()=>{
 const getrequests=async()=>{
     try{
         const response=await axios.get('http://localhost:5178/api/requests',{
-            params:{choice:'1'}
+            params:{choice:'1'},
+            headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
         })
         requests.value=response.data
     }catch(error){
@@ -89,7 +91,7 @@ const getrequests=async()=>{
 
 const changestatus=async(id:number)=>{
     try{
-        const response=await axios.put(`http://localhost:5178/api/change/${id}`,{status:'archived'})
+        const response=await axios.put(`http://localhost:5178/api/change/${id}`,{status:'archived'},{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
         getrequests()
     }catch(error){
         console.error(error)
@@ -98,7 +100,7 @@ const changestatus=async(id:number)=>{
 
 const deletefrombd=async(id:number)=>{
     try{
-        const response=await axios.delete(`http://localhost:5178/api/deletefrombd/${id}`)
+        const response=await axios.delete(`http://localhost:5178/api/deletefrombd/${id}`,{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
         getrequests()
         console.log('success deleted')
     }catch(error){
@@ -108,6 +110,7 @@ const deletefrombd=async(id:number)=>{
 
 onMounted(()=>{
     getrequests()
+    localStorage.removeItem('token')
 })
 </script>
 
@@ -141,6 +144,14 @@ onMounted(()=>{
 }
 .inner-hero h1 span{
     color:#ed3434;
+}
+.btn{
+    color:black;
+    font-family:inherit;
+    font-size:14px;
+    cursor:pointer;
+    padding:12px 24px;
+    border:1px solid black;
 }
 .logout-btn{
     padding:12px 24px;

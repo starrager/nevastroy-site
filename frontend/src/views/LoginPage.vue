@@ -36,7 +36,9 @@ const error=ref('')
 const loginin=async()=>{
     try{
         const response=await axios.post('http://localhost:5178/login',{login:login.value,password:password.value})
-        localStorage.setItem('token','fake-jwt-token-123')
+        localStorage.setItem('token',response.data.token)
+        login.value=''
+        password.value=''
         router.push('/adminpanel')
     }catch(error){
         console.error(error)

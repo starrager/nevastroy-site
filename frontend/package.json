@@ -18,8 +18,10 @@
     "aos": "^2.3.4",
     "axios": "^1.21.1",
     "pinia": "^4.0.3",
+    "toast": "^0.5.4",
     "vue": "^3.5.42",
-    "vue-router": "^5.3.1"
+    "vue-router": "^5.3.1",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.5",

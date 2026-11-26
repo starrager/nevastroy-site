@@ -51,8 +51,16 @@ const router=createRouter({
         },
         {
             path:'/adminpanel',
-            component:AdminPanel
+            component:AdminPanel,
+            meta:{requiresAuth:true}
         }
     ]
 })
+
+router.beforeEach((to,from)=>{
+    const token=localStorage.getItem('token')
+
+    if(to.meta.requiresAuth&&!token)return '/login'
+})
+
 export default router
