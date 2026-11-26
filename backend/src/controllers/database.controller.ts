@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import {Request,Response} from 'express'
+
 const prisma=new PrismaClient()
+const token=process.env.TELEGRAM_TOKEN
+const chatId=process.env.TELEGRAM_CHAT_ID
 
 export const addtodatabase=async(req:Request,res:Response)=>{
     try{
@@ -9,6 +12,42 @@ export const addtodatabase=async(req:Request,res:Response)=>{
         if(!name||!phone||!email||!message)return res.status(201).json({error:'Не хватает данных'})
 
         const bd=await prisma.request.create({data:{name,phone,email,message}})
+        
+        if(token&&chatId){
+            const text=`🔔 Новая заявка!
+        Имя: ${name}
+        Телефон: ${phone}
+        Email: ${email}
+        Сообщение: ${message}`
+        
+            try{
+                const tgResponse=await fetch(
+                    `https://api.telegram.org/bot${token}/sendMessage`,
+                    {
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            chat_id:chatId,
+                            text:text
+                        })
+                    }
+                )
+        
+                const tgData=await tgResponse.json()
+        
+                console.log('HTTP статус Telegram:',tgResponse.status)
+                console.log('Ответ Telegram:',tgData)
+        
+                if (!tgResponse.ok||!tgData.ok){
+                    console.error('Telegram не отправил сообщение:',tgData)
+                }
+        
+            }catch(error){
+                console.error('Ошибка отправки в Telegram:',error)
+            }
+        }
 
         res.status(201).json(bd)
     }catch(error){
