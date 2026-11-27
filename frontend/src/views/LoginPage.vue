@@ -9,11 +9,11 @@
 				<form @submit.prevent="loginin" class="auth-form">
 					<div class="form-group">
 						<label>Логин</label>
-						<input type="text" v-model="login" placeholder="admin" required>
+						<input type="text" v-model="login" required>
 					</div>
 					<div class="form-group">
 						<label>Пароль</label>
-						<input type="password" v-model="password" placeholder="***********" required>
+						<input type="password" v-model="password" required>
 					</div>
 					<button type="submit" class="submit-btn">Войти</button>
 					<p class="error-msg" v-if="error">{{ error }}</p>
