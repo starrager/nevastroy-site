@@ -37,9 +37,6 @@ export const addtodatabase=async(req:Request,res:Response)=>{
         
                 const tgData=await tgResponse.json()
         
-                console.log('HTTP статус Telegram:',tgResponse.status)
-                console.log('Ответ Telegram:',tgData)
-        
                 if (!tgResponse.ok||!tgData.ok){
                     console.error('Telegram не отправил сообщение:',tgData)
                 }
