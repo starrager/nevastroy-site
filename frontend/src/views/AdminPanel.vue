@@ -66,7 +66,7 @@ const showallrequests=async()=>{
     try{
         showflag.value=!showflag.value
 
-        const response=await axios.get('http://localhost:5178/api/requests',{
+        const response=await axios.get(`${import.meta.env.VITE_API_URL}/api/requests`,{
             params:{choice:showflag.value?'1':'2'},
             headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
         })
@@ -79,7 +79,7 @@ const showallrequests=async()=>{
 
 const getrequests=async()=>{
     try{
-        const response=await axios.get('http://localhost:5178/api/requests',{
+        const response=await axios.get(`${import.meta.env.VITE_API_URL}/api/requests`,{
             params:{choice:'1'},
             headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}
         })
@@ -91,7 +91,7 @@ const getrequests=async()=>{
 
 const changestatus=async(id:number)=>{
     try{
-        const response=await axios.put(`http://localhost:5178/api/change/${id}`,{status:'archived'},{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+        const response=await axios.put(`${import.meta.env.VITE_API_URL}/login/api/change/${id}`,{status:'archived'},{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
         getrequests()
     }catch(error){
         console.error(error)
@@ -100,7 +100,7 @@ const changestatus=async(id:number)=>{
 
 const deletefrombd=async(id:number)=>{
     try{
-        const response=await axios.delete(`http://localhost:5178/api/deletefrombd/${id}`,{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+        const response=await axios.delete(`${import.meta.env.VITE_API_URL}/login/api/deletefrombd/${id}`,{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
         getrequests()
         console.log('success deleted')
     }catch(error){

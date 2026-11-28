@@ -109,7 +109,7 @@ const submit=async()=>{
             return
         }
 
-        const response=await axios.post('http://localhost:5178/api/add',{
+        const response=await axios.post(`${import.meta.env.VITE_API_URL}/api/add`,{
             name:name.value,email:email.value,phone:phone.value,message:message.value
         })
 

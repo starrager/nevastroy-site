@@ -35,7 +35,7 @@ const error=ref('')
 
 const loginin=async()=>{
     try{
-        const response=await axios.post('http://localhost:5178/login',{login:login.value,password:password.value})
+        const response=await axios.post(`${import.meta.env.VITE_API_URL}/login`,{login:login.value,password:password.value})
         localStorage.setItem('token',response.data.token)
         login.value=''
         password.value=''
